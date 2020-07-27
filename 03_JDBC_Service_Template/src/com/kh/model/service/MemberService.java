@@ -97,12 +97,33 @@ public class MemberService {
 	public int updateMember(Member m) {
 		Connection conn = JDBCTemplate.getConnection();
 		int result = new MemberDao().updateMember(conn, m);
+		
+
+		if(result > 0) {
+			JDBCTemplate.commit(conn);
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		
 		JDBCTemplate.close(conn);
 		
 		return result;
 	}
 	
-	
+	public int deleteMember(String userId) {
+		Connection conn = JDBCTemplate.getConnection();
+		int result = new MemberDao().deleteMember(conn,userId);
+		
+		if(result > 0) {
+			JDBCTemplate.commit(conn);
+		}else {
+			JDBCTemplate.rollback(conn);
+		}
+		
+		JDBCTemplate.close(conn);
+		
+		return result;
+	}
 	
 }
 

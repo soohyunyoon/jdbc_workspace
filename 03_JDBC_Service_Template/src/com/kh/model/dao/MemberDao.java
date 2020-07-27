@@ -41,8 +41,6 @@ public class MemberDao {
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
-		} finally {
-			JDBCTemplate.close(pstmt);
 		}
 		return result;
 	}
@@ -149,6 +147,9 @@ public class MemberDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
 		}
 		return list;
 	}
@@ -169,13 +170,34 @@ public class MemberDao {
 			pstmt.setString(5, m.getUserId());
 			
 			result = pstmt.executeUpdate();
+			
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
 		}
 	return result;	
 	}
 	
-	
+	public int deleteMember(Connection conn, String userId) {
+		PreparedStatement pstmt = null;
+		int result = 0;
+		
+		String sql = "DELETE FROM MEMBER WHERE USERID = ?";
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(pstmt);
+		}
+		return result;
+	}
 }
 
 

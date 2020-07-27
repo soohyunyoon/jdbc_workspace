@@ -57,13 +57,21 @@ public class MemberController {
 		int result = new MemberService().updateMember(m);
 		
 		if(result > 0) {
-			new MemberMenu().displayNoData("조회된 결과가 없습니다");
-		}else {
 			new MemberMenu().displayMember(m);
+		}else {
+			new MemberMenu().displayNoData("조회된 결과가 없습니다");
 		}
 	}
 	
-	
+	public void deleteMember(String userId) {
+		int result = new MemberService().deleteMember(userId);
+		
+		if(result > 0) {
+			new MemberMenu().displaySuccess("성공적으로 탈퇴되었습니다");
+		}else {
+			new MemberMenu().displayFail("탈퇴에 실패했습니다");
+		}
+	}
 }
 
 
