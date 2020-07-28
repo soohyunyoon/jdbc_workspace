@@ -46,12 +46,12 @@ public class MemberController {
 	}
 	
 	public void selectByUserName(String userName) {
-		Member m = new MemberDao().selectByUserName(userName);
+		ArrayList<Member> list = new MemberDao().selectByUserName(userName);
 		
-		if(m == null) {
+		if(list.isEmpty()) {
 			new MemberMenu().displayNoData("조회된 이름이 없습니다");
 		}else {
-			new MemberMenu().displayMember(m);
+			new MemberMenu().displayMemberList(list);
 		}
 		
 	}
@@ -77,4 +77,13 @@ public class MemberController {
 		}
 	}
 	
+	public void loginMember(String userId, String userPwd) {
+		Member m = new MemberDao().loginMember(userId, userPwd);
+		
+		if(m == null) {
+			new MemberMenu().displayFail("로그인 실패");	
+		}else {
+			new MemberMenu().displayMember(m);
+		}
+	}
 }

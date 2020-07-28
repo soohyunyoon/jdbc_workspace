@@ -189,7 +189,7 @@ public class MemberDao {
 	}
 	
 	public ArrayList<Member> selectByUserName(String userName) {
-		ArrayList<Member> m = null;
+		ArrayList<Member> list = null;
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rset = null;
@@ -204,7 +204,7 @@ public class MemberDao {
 			rset = pstmt.executeQuery();
 			
 			while(rset.next()) {
-				 m = new ArrayList<Member>(
+				 list.add(new Member(
 								rset.getString("USERID"),
 								rset.getString("USERPWD"),
 								rset.getString("UserName"),
@@ -214,7 +214,7 @@ public class MemberDao {
 								rset.getString("Phone"),
 								rset.getString("Address"),
 								rset.getString("Hobby")
-								);
+								));
 			}
 			
 		} catch (ClassNotFoundException e) {
@@ -231,7 +231,7 @@ public class MemberDao {
 			}
 			
 		}
-		return m;
+		return list;
 	}
 	
 	public int updateMember(Member m) {
@@ -308,7 +308,53 @@ public class MemberDao {
 		}
 		return result;
 	}
-	
+	public Member loginMember(String userId, String userPwd) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		Member m = null;
+		ResultSet rset = null;
+		
+		String sql = "SELECT * FROM MEMBER WHERE USERID = ? AND USERPWD = ?";
+		try {
+			Class.forName("oracle.jdbc.driver.OracleDriver");
+			conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe","JDBC","JDBC");
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			pstmt.setString(2, userPwd);
+			
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				m = new Member(rset.getInt("userno"),
+								rset.getString("USERID"),
+						       rset.getString("userpwd"),
+						       rset.getString("username"),
+						       rset.getString("gender"),
+						       rset.getInt("age"),
+						       rset.getString("email"),
+						       rset.getString("phone"),
+						       rset.getString("address"),
+						       rset.getString("hobby"),
+						       rset.getDate("enrolldate"));
+				
+				
+			}
+			
+			
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				rset.close();
+				pstmt.close();
+				conn.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return m;
+	}
 }
 
 
