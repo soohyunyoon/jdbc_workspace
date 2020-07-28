@@ -6,17 +6,17 @@ public class Product {
 	private String p_Name;
 	private int price;
 	private String description;
-	private int number;
+	private int stock;
 	
 	public Product() {}
 
-	public Product(String productId, String p_Name, int price, String description, int number) {
+	public Product(String productId, String p_Name, int price, String description, int stock) {
 		super();
 		this.productId = productId;
 		this.p_Name = p_Name;
 		this.price = price;
 		this.description = description;
-		this.number = number;
+		this.stock = stock;
 	}
 
 	public String getProductId() {
@@ -51,18 +51,18 @@ public class Product {
 		this.description = description;
 	}
 
-	public int getNumber() {
-		return number;
+	public int getStock() {
+		return stock;
 	}
 
-	public void setNumber(int number) {
-		this.number = number;
+	public void setStock(int stock) {
+		this.stock = stock;
 	}
 
 	@Override
 	public String toString() {
 		return "Product [productId=" + productId + ", p_Name=" + p_Name + ", price=" + price + ", description="
-				+ description + ", number=" + number + "]";
+				+ description + ", stock=" + stock + "]";
 	}
 	
 	
