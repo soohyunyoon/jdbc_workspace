@@ -1,10 +1,12 @@
 package com.kh.run;
 
+import com.kh.model.vo.Product;
+
 public class Run {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+		Product p = new Product();
+		
 	}
 
 }
