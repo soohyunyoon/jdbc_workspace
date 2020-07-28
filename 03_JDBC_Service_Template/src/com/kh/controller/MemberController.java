@@ -72,6 +72,16 @@ public class MemberController {
 			new MemberMenu().displayFail("탈퇴에 실패했습니다");
 		}
 	}
+	
+	public void loginMember(String userId, String userPwd) {
+		Member m = new MemberService().loginMember(userId, userPwd);
+		
+		if(m == null) {
+			new MemberMenu().displayNoData("로그인 실패하였습니다");
+		}else {
+			new MemberMenu().displayMember(m);
+		}
+	}
 }
 
 

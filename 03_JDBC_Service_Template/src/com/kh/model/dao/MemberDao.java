@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import static com.kh.common.JDBCTemplate.*;
+
 import com.kh.common.JDBCTemplate;
 import com.kh.model.vo.Member;
 
@@ -75,8 +77,8 @@ public class MemberDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			JDBCTemplate.close(rset);
-			JDBCTemplate.close(stmt);
+			close(rset);
+			close(stmt);
 			
 		}
 		return list;
@@ -112,8 +114,8 @@ public class MemberDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			JDBCTemplate.close(rset);
-			JDBCTemplate.close(pstmt);
+			close(rset);
+			close(pstmt);
 		}
 		return m;
 		
@@ -148,8 +150,8 @@ public class MemberDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			JDBCTemplate.close(rset);
-			JDBCTemplate.close(pstmt);
+			close(rset);
+			close(pstmt);
 		}
 		return list;
 	}
@@ -175,7 +177,7 @@ public class MemberDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			JDBCTemplate.close(pstmt);
+			close(pstmt);
 		}
 	return result;	
 	}
@@ -194,9 +196,45 @@ public class MemberDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
-			JDBCTemplate.close(pstmt);
+			close(pstmt);
 		}
 		return result;
+	}
+	
+	public Member loginMember(Connection conn, String userId, String userPwd) {
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		Member m = null;
+		
+		String sql = "SELECT * FROM MEMBER WHERE USERID=? AND USERPWD=?";
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userId);
+			pstmt.setString(2, userPwd);
+			
+			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				m = new Member(rset.getInt("userno"),
+								rset.getString("userid"),
+								rset.getString("userpwd"),
+								rset.getString("username"),
+								rset.getString("gender"),
+								rset.getInt("age"),
+								rset.getString("email"),
+								rset.getString("phone"),
+								rset.getString("address"),
+								rset.getString("hobby"),
+								rset.getDate("enrolldate"));
+						
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+	return m;	
 	}
 }
 
