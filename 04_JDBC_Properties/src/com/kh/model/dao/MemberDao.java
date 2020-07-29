@@ -263,6 +263,19 @@ public class MemberDao {
 			pstmt.setString(2, userPwd);
 			
 			rset = pstmt.executeQuery();
+			if(rset.next()) {
+				m = new Member(rset.getInt("userno"),
+								rset.getString("userid"),
+								rset.getString("userpwd"),
+								rset.getString("username"),
+								rset.getString("gender"),
+								rset.getInt("age"),
+								rset.getString("email"),
+								rset.getString("phone"),
+								rset.getString("address"),
+								rset.getString("hobby"),
+								rset.getDate("enrolldate"));
+			}
 			
 		} catch (SQLException e) {
 			e.printStackTrace();

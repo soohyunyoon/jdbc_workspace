@@ -118,7 +118,7 @@ public class MemberMenu {
 			String userPwd = sc.nextLine();
 			
 			// 전달할 값이 얼마 안되니깐 그냥 따로 보냄!
-			//mc.loginMember(userId, userPwd);
+			mc.loginMember(userId, userPwd);
 		}
 	
 	
