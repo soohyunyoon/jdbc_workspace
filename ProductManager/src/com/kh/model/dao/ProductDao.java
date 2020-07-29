@@ -136,8 +136,8 @@ public class ProductDao {
 			pstmt.setString(1, "%" + keyword + "%");
 			rset = pstmt.executeQuery();
 			while(rset.next()) {
-				list.add(new Product (rset.getString("product_id"),
-								rset.getString("P_Name"),
+				list.add(new Product (rset.getString("PRODUCT_ID"),
+								rset.getString("P_NAME"),
 								rset.getInt("price"),
 								rset.getString("description"),	
 								rset.getInt("stock")));

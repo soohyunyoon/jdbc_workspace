@@ -87,7 +87,7 @@ public class ProductMenu {
 		return sc.nextLine();
 	}
 	public String inputProductName() {
-		System.out.println("조회 할 상품 이름 : ");
+		System.out.print("조회 할 상품 이름 : ");
 		return sc.nextLine();
 	}
 	
